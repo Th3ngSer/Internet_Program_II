@@ -16,7 +16,7 @@ import { ReceiptsService } from './receipts.service';
 @UseGuards(ApiKeyGuard)
 @Controller('receipts')
 export class ReceiptsController {
-    constructor(private readonly receiptsService: ReceiptsService) { }
+    constructor(private readonly receiptsService: ReceiptsService) {}
 
     @Get()
     findAll() {
