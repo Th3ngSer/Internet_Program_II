@@ -11,7 +11,7 @@ import {
 import { ApiKeyGuard } from '../common/guards/api-key.guard';
 import { CreateReceiptDto } from './dto/create-receipts.dto';
 import { UpdateReceiptDto } from './dto/update-receipts.dto';
-import { ReceiptsService } from './receipts.service';
+import { ReceiptsService } from './receipts.service.js';
 
 @UseGuards(ApiKeyGuard)
 @Controller('receipts')
