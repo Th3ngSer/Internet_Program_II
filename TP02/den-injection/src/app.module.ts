@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ReceiptsModule } from './receipts/receipts.module';
 
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -14,9 +15,9 @@ import { ReceiptsModule } from './receipts/receipts.module';
       type: 'postgres',
       host: process.env.DB_HOST ?? 'localhost',
       port: Number(process.env.DB_PORT ?? 5432),
-      username: process.env.DB_USER ?? 'postgres',
-      password: process.env.DB_PASSWORD ?? 'postgres',
-      database: process.env.DB_NAME ?? 'postgres',
+      username: process.env.DB_USER ?? 'thongking',
+      password: process.env.DB_PASSWORD ?? 'thong',
+      database: process.env.DB_NAME ?? 'TP02',
       autoLoadEntities: true,
       synchronize: true,
     }),
