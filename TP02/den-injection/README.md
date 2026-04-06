@@ -25,6 +25,30 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## Architecture notes
+
+### Rules
+
+- No circular dependency between feature modules.
+- Keep module boundaries clean (one-way dependencies only).
+
+### Current dependency direction
+
+- `ReceiptsModule` -> `NotificationsModule` -> `CoreModule`
+- `OrdersModule` is independent from `NotificationsModule`.
+
+```mermaid
+graph LR
+  ReceiptsModule --> NotificationsModule
+  NotificationsModule --> CoreModule
+  OrdersModule
+```
+
+### Guidance for new code
+
+- If a feature needs cross-module communication, publish via `CoreModule` tokens instead of importing each other both ways.
+- Avoid `forwardRef` unless there is no alternative; prefer refactoring to one-direction imports.
+
 ## Project setup
 
 ```bash

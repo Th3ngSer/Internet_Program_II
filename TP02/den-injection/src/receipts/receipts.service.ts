@@ -4,12 +4,14 @@ import { Repository } from 'typeorm';
 import { CreateReceiptDto } from './dto/create-receipts.dto';
 import { UpdateReceiptDto } from './dto/update-receipts.dto';
 import { Receipt } from './entities/receipt.entity';
+import { NotificationsService } from '../notifications/notifications.service';
 
 @Injectable()
 export class ReceiptsService {
     constructor(
         @InjectRepository(Receipt)
         private readonly receiptRepo: Repository<Receipt>,
+        private readonly notifications: NotificationsService,
     ) { }
 
     async findAll() {
@@ -30,7 +32,14 @@ export class ReceiptsService {
             name: dto.name,
             price: dto.price,
         });
-        return this.receiptRepo.save(receipt);
+
+        const saved = await this.receiptRepo.save(receipt);
+
+        this.notifications.notify('receipt_created', {
+            receiptId: saved.receiptId,
+            price:saved.price
+        });
+        return saved;
     }
 
     async update(receiptId: string, dto: UpdateReceiptDto) {
@@ -54,4 +63,5 @@ export class ReceiptsService {
         await this.receiptRepo.remove(receipt);
         return { deleted: true, receiptId };
     }
+
 }
