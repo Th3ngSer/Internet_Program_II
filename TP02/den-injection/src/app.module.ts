@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { ReceiptsModule } from './receipts/receipts.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { OrdersModule } from './orders/orders.module';
+import { GraphqlModule } from './graphql/graphql.module';
 
 
 @Module({
@@ -26,6 +27,7 @@ import { OrdersModule } from './orders/orders.module';
     ReceiptsModule,
     NotificationsModule,
     OrdersModule,
+    GraphqlModule,
   ],
   controllers: [AppController],
   providers: [AppService],
