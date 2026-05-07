@@ -22,6 +22,11 @@ export class ProductCodeFirstResolver {
     return this.productService.findOne(id);
   }
 
+  @Query(() => [ProductType])
+  productsByCategory(@Args('categoryId') categoryId: number) {
+    return this.productService.findByCategoryId(categoryId);
+  }
+
   @Mutation(() => ProductType)
   createProduct(@Args('input') input: CreateProductInput) {
     return this.productService.create(input);

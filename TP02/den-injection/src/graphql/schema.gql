@@ -19,6 +19,7 @@ type Query {
   categories: [CategoryType!]!
   products: [ProductType!]!
   product(id: Float!): ProductType
+  productsByCategory(categoryId: Float!): [ProductType!]!
 }
 
 type Mutation {

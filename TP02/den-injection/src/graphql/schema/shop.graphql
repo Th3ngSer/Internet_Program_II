@@ -15,6 +15,7 @@ type Query {
   categories: [Category!]!
   products: [Product!]!
   product(id: ID!): Product
+  productsByCategory(categoryId: ID!): [Product!]!
 }
 
 type Mutation {

@@ -20,6 +20,11 @@ export class ProductResolver {
     return this.productService.findOne(Number(id));
   }
 
+  @Query('productsByCategory')
+  productsByCategory(@Args('categoryId') categoryId: string) {
+    return this.productService.findByCategoryId(Number(categoryId));
+  }
+
   @Mutation('createProduct')
   createProduct(
     @Args('name') name: string,

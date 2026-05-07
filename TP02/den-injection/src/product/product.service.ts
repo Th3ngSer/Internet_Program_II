@@ -13,6 +13,10 @@ export class ProductService {
     findAll() {
         return this.products;
     }
+// Mini Challenge: Implement a method to find products by category ID
+    findByCategoryId(categoryId: number) {
+        return this.products.filter((item) => item.categoryId === categoryId);
+    }
 
     findOne(id: number) {
         const product = this.products.find((item) => item.id === id);
