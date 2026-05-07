@@ -2,8 +2,8 @@ import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from
 
 @Injectable()
 export class ApiKeyGuard implements CanActivate {
-  canActivate(context: ExecutionContext): boolean {
-    const req = context.switchToHttp().getRequest<Request & { headers: any }>();
+  canActivate(context: ExecutionContext): boolean {  
+    const req = context.switchToHttp().getRequest();
     const apiKey = req.headers['x-api-key'];
 
     if (!apiKey || apiKey !== process.env.API_KEY) {
