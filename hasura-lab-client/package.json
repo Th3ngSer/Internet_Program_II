@@ -1,0 +1,19 @@
+{
+  "name": "hasura-lab-client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "graphql-ws": "^6.0.8",
+    "node-fetch": "^3.3.2",
+    "ws": "^8.20.1"
+  }
+}
