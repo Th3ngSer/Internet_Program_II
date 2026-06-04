@@ -1,22 +1,30 @@
 <template>
-  <li class="list pending" @click="toggleStatus(todo.id)">
-    <input type="checkbox" :checked="todo.completedAt != null" />
-    <span class="task">{{ todo.name }}</span>
-    <i class="uil" :class="icon"></i>
+  <li class="list" :class="{ pending: !todo.is_done }">
+    <input
+      type="checkbox"
+      :checked="todo.is_done"
+      @click.stop="onToggle"
+    />
+    <span class="task">{{ todo.title }}</span>
+    <i class="uil" :class="icon" @click.stop="onDelete"></i>
   </li>
 </template>
-<script>
-import { useTodoStore } from "../stores/todo";
-export default {
-  setup() {
-    const todoStore = useTodoStore();
-    return { todoStore };
-  },
-  props: ["todo", "icon"],
-  methods: {
-    toggleStatus(todoId) {
-      this.todoStore.toggleStatus(todoId);
-    },
-  },
-};
+
+<script setup lang="ts">
+import { useTodoStore, type Todo } from '../stores/todo.store'
+
+const props = defineProps<{
+  todo: Todo
+  icon: string
+}>()
+
+const todoStore = useTodoStore()
+
+function onToggle() {
+  todoStore.toggleTodo(props.todo)
+}
+
+function onDelete() {
+  todoStore.deleteTodo(props.todo.id)
+}
 </script>

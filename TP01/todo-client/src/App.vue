@@ -1,63 +1,53 @@
 <template>
   <div class="container">
-    <AddTodo @added="handleAddTodo" />
+    <AddTodo @added="onAdd" />
+
     <h3>Pending Tasks:</h3>
-    <TodoLists status="pending" />
+    <TodoList status="pending" />
 
     <h3>Completed Tasks:</h3>
-    <TodoLists status="completed" />
+    <TodoList status="completed" />
+
     <div class="pending-tasks">
       <span
-        >You have <span class="pending-num"> {{ nbOfTodo }} </span> tasks
+        >You have <span class="pending-num">{{ pendingCount }}</span> tasks
         pending.</span
       >
-      <button class="clear-button">Clear All</button>
+      <button class="clear-button" @click="onClearAll">Clear All</button>
     </div>
   </div>
 </template>
-<script>
-import { mapState } from "pinia";
-import axios from 'axios';
-import AddTodo from "./components/AddTodo.vue";
-import TodoLists from "./components/TodoList.vue";
 
-import { useTodoStore } from "./stores/todo";
-export default {
-  name: "App",
-  setup() {
-    const store = useTodoStore();
-    return {
-      store,
-    };
-  },
-  components: {
-    AddTodo,
-    TodoLists,
-  },
-  computed: {
-    ...mapState(useTodoStore, {
-      nbOfTodo: "countTodos",
-    }),
-  },
-  methods: {
-    handleAddTodo(todo) {
-      this.store.addTodo(todo);
-    },
-    clearAllTodos() {
-      console.log("clear");
-      this.store.clearAll();
-    },
-  },
-  async fetchTodos() {
-    try {
-      const response = await axios.get('http://localhost:3100/tasks');
-      this.todos = response.data; // assuming the API returns an array of todos
-    } catch (error) {
-      console.error('Failed to fetch todos:', error);
-    }
-  }
-};
+<script setup lang="ts">
+import { onMounted, onBeforeUnmount, computed } from 'vue'
+import { useTodoStore } from './stores/todo.store'
+import AddTodo from './components/AddTodo.vue'
+import TodoList from './components/TodoList.vue'
+
+const todoStore = useTodoStore()
+let stopRealtime: null | (() => void) = null
+
+const pendingCount = computed(
+  () => todoStore.todos.filter((t) => !t.is_done).length,
+)
+
+onMounted(async () => {
+  await todoStore.fetchTodos()
+  // Optional: enable realtime subscription
+  stopRealtime = todoStore.startRealtime()
+})
+
+onBeforeUnmount(() => stopRealtime?.())
+
+function onAdd(title: string) {
+  todoStore.addTodo(title)
+}
+
+function onClearAll() {
+  todoStore.clearAll()
+}
 </script>
+
 <style>
 @import "https://unicons.iconscout.com/release/v4.0.0/css/line.css";
 </style>
