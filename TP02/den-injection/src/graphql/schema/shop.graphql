@@ -8,7 +8,7 @@ type Product {
   name: String!
   price: Float!
   categoryId: ID!
-  category: Category
+  category: Category`
 }
 
 type Query {
